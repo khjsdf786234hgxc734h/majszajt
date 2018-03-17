@@ -4,6 +4,7 @@ from sqlalchemy                 import create_engine
 from sqlalchemy.ext.declarative import declarative_base 
 from sqlalchemy                 import Column, Integer, String
 from sqlalchemy.orm             import sessionmaker
+from sqlalchemy.orm             import exc
 app = Flask(__name__)
 
 @app.route('/')
@@ -22,8 +23,14 @@ def imdb_search():
 
     Session = sessionmaker(bind = engine)
     session = Session()
-
-    idd = session.query(Movie.id).first()
+    
+    try:
+        idd = session.query(Movie.title_primary).filter(Movie.title_primary.ilike('%XXXiger%')).first()
+    #except exc.NoResultFound, exc.MultipleResultsFound:
+    except exc.SQLAlchemyError:
+        idd = 'ERROR :-)'
+    else:
+        idd = 'Error 2'
 
     session.close()
 
