@@ -1,4 +1,4 @@
-from flask                      import Flask
+from flask                      import Flask, redirect, render_template, request, url_for
 from password                   import db_host, db_database, db_user, db_password
 from sqlalchemy                 import create_engine
 from sqlalchemy.ext.declarative import declarative_base 
@@ -11,7 +11,7 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello from majszajt!'
 
-@app.route('/ajemdibi_szorcs')
+@app.route('/ajemdibi_szorcs', methods = ['GET', 'POST'])
 def imdb_search():
     engine = create_engine('mysql+mysqldb://' + db_user + ':' + db_password + '@' + db_host + '/' + db_database , echo = True)
     Base = declarative_base()
@@ -24,17 +24,31 @@ def imdb_search():
     Session = sessionmaker(bind = engine)
     session = Session()
     
+    list_movies = []
+    
+    if request.method == 'GET':
+        return render_template('movie_search.html', list_movies = list_movies)
+
+
+
+
     try:
-        idd = session.query(Movie.title_primary).filter(Movie.title_primary.ilike('%XXXiger%')).first()
+        list_movies = session.query(Movie.title_primary).filter(Movie.title_primary.ilike('%iger%'))
+        session.close()
+        return render_template('movie_search.html', list_movies = list_movies )
     #except exc.NoResultFound, exc.MultipleResultsFound:
     except exc.SQLAlchemyError:
-        idd = 'ERROR :-)'
+        list_movies = []
+        return render_template('movie_search.html', list_movies = list_movies )
+#        idd = 'ERROR :-)'
     else:
-        idd = 'Error 2'
+        list_movies = []
+        return render_template('movie_search.html', list_movies = list_movies )
+#        idd = 'Error 2'
 
-    session.close()
+#    session.close()
 
-    return idd
+#    return idd
 
 
 

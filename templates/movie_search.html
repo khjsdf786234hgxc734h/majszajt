@@ -1,0 +1,26 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IMDB Movie Search</title>
+</head>
+
+<body>
+
+
+
+<div class="row">
+    <form action="/ajemdibi_szorcs" method="POST">
+        <input type="text" name="movie_title" placeholder="Enter a movie title">
+        <input type="submit" value="Search">
+    </form>
+</div>
+
+{% for record in list_movies %}
+<div class="row">
+    {{ record.title_primary }}
+</div>
+{% endfor %}
+
+</body>
+</html>
