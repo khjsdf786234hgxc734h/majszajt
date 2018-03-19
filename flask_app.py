@@ -5,7 +5,21 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy                 import Column, Integer, String
 from sqlalchemy.orm             import sessionmaker
 from sqlalchemy.orm             import exc
+
 app = Flask(__name__)
+
+engine = create_engine('mysql+mysqldb://' + db_user + ':' + db_password + '@' + db_host + '/' + db_database , echo = True)
+
+Base = declarative_base()
+
+class Movie(Base):
+    __tablename__ = 'tb_movie'
+    id = Column(String, primary_key = True)
+    title_primary = Column(String)
+
+Session = sessionmaker(bind = engine)
+
+session = Session()
 
 @app.route('/')
 def hello_world():
@@ -13,44 +27,29 @@ def hello_world():
 
 @app.route('/ajemdibi_szorcs', methods = ['GET', 'POST'])
 def imdb_search():
-    engine = create_engine('mysql+mysqldb://' + db_user + ':' + db_password + '@' + db_host + '/' + db_database , echo = True)
-    Base = declarative_base()
-    class Movie(Base):
-        __tablename__ = 'tb_movie'
-
-        id = Column(String, primary_key = True)
-        title_primary = Column(String)
-
-    Session = sessionmaker(bind = engine)
-    session = Session()
     
     list_movies = []
     
     if request.method == 'GET':
         return render_template('movie_search.html', list_movies = list_movies)
 
-
-
-
     try:
-        list_movies = session.query(Movie.title_primary).filter(Movie.title_primary.ilike('%iger%'))
-        session.close()
-        return render_template('movie_search.html', list_movies = list_movies )
+        #session = Session()
+        movie_title = request.form['movie_title']
+        list_movies = session.query(Movie.title_primary).filter(Movie.title_primary.ilike('%' + movie_title + '%'))
     #except exc.NoResultFound, exc.MultipleResultsFound:
     except exc.SQLAlchemyError:
-        list_movies = []
-        return render_template('movie_search.html', list_movies = list_movies )
-#        idd = 'ERROR :-)'
+#        list_movies = []
+        pass
+    
     else:
-        list_movies = []
-        return render_template('movie_search.html', list_movies = list_movies )
-#        idd = 'Error 2'
+        pass
+#        list_movies = []
 
-#    session.close()
+    finally:
+#        session.close()
+        pass
 
-#    return idd
-
-
-
+    return render_template('movie_search.html', list_movies = list_movies ) 
 
 
