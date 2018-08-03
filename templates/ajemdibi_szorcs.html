@@ -1,8 +1,9 @@
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="/home/cicamica/static/aux/bootstrap.css">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>IMDB Movie Search</title>
+<title>IMDB Search</title>
 </head>
 
 <body>
@@ -21,11 +22,29 @@
     </form>
 </div>
 
+{% if list_movies %}
+<table class="table  table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Year</th>
+      <th scope="col">Genre</th>
+      <th scope="col">Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+
 {% for record in list_movies %}
-<div class="row">
-    {{ record.title_primary }} {{ record.year }} {{ record.genre }} {{ record.rating }}
-</div>
+<tr>
+      <td>{{ record.title_primary }}</td>
+      <td>{{ record.year }}</td>
+      <td>{{ record.genre }}</td>
+      <td>{{ record.rating }}</td>
+</tr>
 {% endfor %}
+  </tbody>
+</table>
+{% endif %}
 
 </body>
 </html>
