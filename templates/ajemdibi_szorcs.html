@@ -9,20 +9,23 @@
 
     <body>
         <div class="container">
-            <!-- <div class="row"> -->
-                <form action="/ajemdibi_szorcs" method="POST">
-                    <input type="text" name="movie_title" placeholder="Enter a movie title">
-                    <select name="movie_year">
-                        <option value="2010">2010</option>
-                        <option value="2000">2000</option>
-                        <option value="1990">1990</option>
-                    </select>
-                    <input type="submit" value="Search">
-                </form>
-            <!-- </div> -->
+            <form action="/ajemdibi_szorcs" method="POST">
+                <input type="text" name="movie_title" placeholder="Enter a movie title">
+                <select name="movie_year">
+                    <option value="2010">2010</option>
+                    <option value="2000">2000</option>
+                    <option value="1990">1990</option>
+                </select>
+                <input type="submit" value="Search">
+            </form>
 
+            <div>
+
+            </div>
+            
+            
             {% if list_movies %}
-            <table class="table  table-bordered table-sm">
+            <table class="table  table-bordered table-sm table-hover">
 
                 <thead>
                     <tr>
