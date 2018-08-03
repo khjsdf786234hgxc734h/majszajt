@@ -9,25 +9,24 @@
 
     <body>
         <div class="container">
-            <form action="/ajemdibi_szorcs" method="POST">
-                <input type="text" name="movie_title" placeholder="Enter a movie title">
-                <select class="custom-select" name="movie_year">
-                    <option value="2010">2010-2019</option>
-                    <option value="2000">2000-2009</option>
-                    <option value="1990">1990-1999</option>
-                    <option value="1980">1980-1989</option>
-                    <option value="1970">1970-1979</option>
-                    <option value="1960">1960-1969</option>
-                    <option value="0000">0000-1959</option>
-                </select>
-                <input type="submit" value="Search">
+            <form class="form-inline" action="/ajemdibi_szorcs" method="POST">
+                <div class="form-group mb-2">
+                    <input class="form-control" type="text" name="movie_title" placeholder="Enter a movie title">
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-control" name="movie_year">
+                        <option value="2010">2010 - 2019</option>
+                        <option value="2000">2000 - 2009</option>
+                        <option value="1990">1990 - 1999</option>
+                        <option value="1980">1980 - 1989</option>
+                        <option value="1970">1970 - 1979</option>
+                        <option value="1960">1960 - 1969</option>
+                        <option value="0000">0000 - 1959</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Search</button>
             </form>
 
-            <div class="row">
-
-            </div>
-            
-            
             {% if list_movies %}
             <table class="table table-bordered table-sm table-hover">
 
