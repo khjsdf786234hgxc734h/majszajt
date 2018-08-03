@@ -10,10 +10,10 @@
     <body>
         <div class="container">
             <form class="form-inline" action="/ajemdibi_szorcs" method="POST">
-                <div class="form-group mb-2">
+                <div class="form-group">
                     <input class="form-control" type="text" name="movie_title" placeholder="Enter a movie title">
                 </div>
-                <div class="form-group mb-2">
+                <div class="form-group mx-sm-3">
                     <select class="form-control" name="movie_year">
                         <option value="2010">2010 - 2019</option>
                         <option value="2000">2000 - 2009</option>
@@ -24,7 +24,7 @@
                         <option value="0000">0000 - 1959</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Search</button>
+                <button type="submit" class="btn btn-primary">Search</button>
             </form>
 
             {% if list_movies %}
