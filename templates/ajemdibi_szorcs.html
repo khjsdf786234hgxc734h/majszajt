@@ -1,50 +1,50 @@
 <html>
-<head>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>IMDB Search</title>
-</head>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>IMDB Search</title>
+    </head>
 
-<body>
+    <body>
 
+        <div class="row">
+            <form action="/ajemdibi_szorcs" method="POST">
+                <input type="text" name="movie_title" placeholder="Enter a movie title">
+                <select name="movie_year">
+                    <option value="2010">2010</option>
+                    <option value="2000">2000</option>
+                    <option value="1990">1990</option>
+                </select>
+                <input type="submit" value="Search">
+            </form>
+        </div>
 
+        {% if list_movies %}
+        <table class="table  table-bordered">
 
-<div class="row">
-    <form action="/ajemdibi_szorcs" method="POST">
-        <input type="text" name="movie_title" placeholder="Enter a movie title">
-        <select name="movie_year">
-            <option value="2010">2010</option>
-            <option value="2000">2000</option>
-            <option value="1990">1990</option>
-        </select>
-        <input type="submit" value="Search">
-    </form>
-</div>
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">Genre</th>
+                    <th scope="col">Rating</th>
+                </tr>
+            </thead>
 
-{% if list_movies %}
-<table class="table  table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">Title</th>
-      <th scope="col">Year</th>
-      <th scope="col">Genre</th>
-      <th scope="col">Rating</th>
-    </tr>
-  </thead>
-  <tbody>
+            <tbody>
+                {% for record in list_movies %}
+                <tr>
+                    <td>{{ record.title_primary }}</td>
+                    <td>{{ record.year }}</td>
+                    <td>{{ record.genre }}</td>
+                    <td>{{ record.rating }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
 
-{% for record in list_movies %}
-<tr>
-      <td>{{ record.title_primary }}</td>
-      <td>{{ record.year }}</td>
-      <td>{{ record.genre }}</td>
-      <td>{{ record.rating }}</td>
-</tr>
-{% endfor %}
-  </tbody>
-</table>
-{% endif %}
+        </table>
+        {% endif %}
 
-</body>
+    </body>
 </html>
