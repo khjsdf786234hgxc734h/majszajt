@@ -15,8 +15,8 @@ engine = create_engine('mysql+mysqldb://' + db_user + ':' + db_password + '@' + 
 Base = declarative_base()
 
 class Movie(Base):
-    __tablename__ = 'tb_movie'
-    id = Column(String, primary_key = True)
+    __tablename__         = 'tb_movie'
+    id                    = Column(String, primary_key = True)
     title_primary         = Column(String)
     title_secondary       = Column(String)
     title_primary_ascii   = Column(String)
@@ -54,6 +54,7 @@ def ajemdibi_szorcs():
             filter(Movie.year==movie_year)
     #except exc.NoResultFound, exc.MultipleResultsFound:
     except exc.SQLAlchemyError:
+        session.rollback()
 #        list_movies = []
         pass
 
