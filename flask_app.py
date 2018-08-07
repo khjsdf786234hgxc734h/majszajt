@@ -32,8 +32,6 @@ class Movie(Base):
 
 Session = sessionmaker(bind = engine)
 
-session = Session()
-
 @app.route('/')
 def hello_world():
     return 'Hello from majszajt!'
@@ -43,28 +41,29 @@ def ajemdibi_szorcs():
 
     list_movies = []
 
-    if request.method == 'GET':
-        return render_template('ajemdibi_szorcs.html', list_movies = list_movies)
+    if request.method == 'POST':
 
-    try:
         movie_title = request.form['movie_title']
         movie_year  = request.form['movie_year']
-        list_movies = session.query(Movie.title_primary, Movie.year, Movie.genre, Movie.rating, Movie.vote, Movie.country).\
-            filter(Movie.title_primary.ilike('%' + movie_title + '%')).\
-            filter(Movie.year==movie_year)
-    #except exc.NoResultFound, exc.MultipleResultsFound:
-    except exc.SQLAlchemyError:
-        session.rollback()
-#        list_movies = []
-        pass
 
-    else:
-        pass
-#        list_movies = []
+        try:
+            session = Session()
+            list_movies = session.query(Movie.title_primary, Movie.year, Movie.genre, Movie.rating, Movie.vote, Movie.country).\
+                filter(Movie.title_primary.ilike('%' + movie_title + '%')).\
+                filter(Movie.year==movie_year)
+        #except exc.NoResultFound, exc.MultipleResultsFound:
+        except exc.SQLAlchemyError:
+            session.rollback()
 
-    finally:
-        pass
+        else:
+            session.rollback()
+
+        finally:
+            session.close()
+
+        engine.dispose()
 
     return render_template('ajemdibi_szorcs.html', list_movies = list_movies )
+
 
 
