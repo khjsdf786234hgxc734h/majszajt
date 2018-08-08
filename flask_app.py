@@ -45,7 +45,7 @@ def ajemdibi_szorcs():
         movie_year  = request.form['movie_year']
 
         try:
-            session = g.db_session()
+            session = flask.g.get('db_session', None)
             list_movies = session.query(Movie.title_primary, Movie.year, Movie.genre, Movie.rating, Movie.vote, Movie.country).\
                 filter(Movie.title_primary.ilike('%' + movie_title + '%')).\
                 filter(Movie.year==movie_year)
