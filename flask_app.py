@@ -60,8 +60,6 @@ def ajemdibi_szorcs():
         finally:
             session.close()
 
-        engine.dispose()
-
     return render_template('ajemdibi_szorcs.html', list_movies = list_movies )
 
 
