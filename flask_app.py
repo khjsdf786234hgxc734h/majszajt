@@ -1,16 +1,15 @@
-from flask                      import Flask, redirect, render_template, request, url_for
-from password                   import db_host, db_database, db_user, db_password
-from sqlalchemy                 import create_engine
+from flask                      import Flask, render_template, request
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy                 import Column, Integer, String, Numeric
-from sqlalchemy.orm             import sessionmaker
 from sqlalchemy.orm             import exc
+from majszajt                   import db_session
+
 
 app = Flask(__name__)
 
 app.config['DEBUG'] = True
 
-engine = create_engine('mysql+mysqldb://' + db_user + ':' + db_password + '@' + db_host + '/' + db_database , echo = True)
+
 
 Base = declarative_base()
 
@@ -30,7 +29,7 @@ class Movie(Base):
 
 
 
-Session = sessionmaker(bind = engine)
+
 
 @app.route('/')
 def hello_world():
@@ -47,7 +46,7 @@ def ajemdibi_szorcs():
         movie_year  = request.form['movie_year']
 
         try:
-            session = Session()
+            session = db_session()
             list_movies = session.query(Movie.title_primary, Movie.year, Movie.genre, Movie.rating, Movie.vote, Movie.country).\
                 filter(Movie.title_primary.ilike('%' + movie_title + '%')).\
                 filter(Movie.year==movie_year)
