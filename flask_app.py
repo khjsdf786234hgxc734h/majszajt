@@ -2,7 +2,6 @@ from flask                      import Flask, render_template, request, g
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy                 import Column, Integer, String, Numeric
 from sqlalchemy.orm             import exc
-from majszajt                   import db_session
 
 
 app = Flask(__name__)
