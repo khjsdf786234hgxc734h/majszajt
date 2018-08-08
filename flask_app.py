@@ -1,4 +1,4 @@
-from flask                      import Flask, render_template, request
+from flask                      import Flask, render_template, request, g
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy                 import Column, Integer, String, Numeric
 from sqlalchemy.orm             import exc
@@ -46,7 +46,7 @@ def ajemdibi_szorcs():
         movie_year  = request.form['movie_year']
 
         try:
-            session = db_session()
+            session = g.db_session()
             list_movies = session.query(Movie.title_primary, Movie.year, Movie.genre, Movie.rating, Movie.vote, Movie.country).\
                 filter(Movie.title_primary.ilike('%' + movie_title + '%')).\
                 filter(Movie.year==movie_year)
