@@ -6,7 +6,7 @@ from flask import g
 
 engine = create_engine('mysql+mysqldb://' + db_user + ':' + db_password + '@' + db_host + '/' + db_database , echo = True)
 
-if not g.db_session:
+if not hasattr(g, 'db_session'):
     g.db_session = sessionmaker(bind = engine)
 
 
