@@ -9,7 +9,7 @@
 
     <body>
         <div class="container">
-            <form class="form-inline" action="/ajemdibi_szorcs" method="POST">
+            <form class="form-inline" action="{{ url_for('ajemdibi_szorcs') }}" method="POST">
                 <div class="form-group">
                     <input class="form-control" type="text" name="movie_title" placeholder="Enter a movie title">
                 </div>

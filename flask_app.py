@@ -1,8 +1,8 @@
-from flask                      import Flask, render_template, request, g
+from flask                      import Flask, render_template, request
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy                 import Column, Integer, String, Numeric
 from sqlalchemy.orm             import exc
-
+from majszajt                   import db_session as session
 
 app = Flask(__name__)
 
@@ -45,11 +45,10 @@ def ajemdibi_szorcs():
         movie_year  = request.form['movie_year']
 
         try:
-            db_session = flask.g.get('db_session', None)
-            session = db_session()
             list_movies = session.query(Movie.title_primary, Movie.year, Movie.genre, Movie.rating, Movie.vote, Movie.country).\
                 filter(Movie.title_primary.ilike('%' + movie_title + '%')).\
                 filter(Movie.year==movie_year)
+            session.rollback()
         #except exc.NoResultFound, exc.MultipleResultsFound:
         except exc.SQLAlchemyError:
             session.rollback()
@@ -58,7 +57,7 @@ def ajemdibi_szorcs():
             session.rollback()
 
         finally:
-            session.close()
+            session.rollback()
 
     return render_template('ajemdibi_szorcs.html', list_movies = list_movies )
 
