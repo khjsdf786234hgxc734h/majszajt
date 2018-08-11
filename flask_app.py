@@ -43,18 +43,20 @@ def ajemdibi_szorcs():
 
         movie_title = request.form['movie_title']
         movie_year  = request.form['movie_year']
+        movie_genre = request.form['movie_genre']
 
         try:
-            list_movies = session.query(Movie.title_primary, Movie.year, Movie.genre, Movie.rating, Movie.vote, Movie.country).\
+            list_movies = session.query(Movie.id, Movie.title_primary, Movie.year, Movie.genre, Movie.rating, Movie.vote, Movie.country).\
                 filter(Movie.title_primary.ilike('%' + movie_title + '%')).\
+                filter(Movie.genre.ilike('%' + movie_genre + '%')).\
                 filter(Movie.year==movie_year)
             session.rollback()
         #except exc.NoResultFound, exc.MultipleResultsFound:
-        except exc.SQLAlchemyError:
+        except:# exc.SQLAlchemyError:
             session.rollback()
 
-        else:
-            session.rollback()
+        #else:
+        #    session.rollback()
 
         finally:
             session.rollback()

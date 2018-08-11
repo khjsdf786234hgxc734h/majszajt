@@ -1,4 +1,4 @@
-from password import db_host, db_database, db_user, db_password
+from config import db_host, db_database, db_user, db_password
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 #from flask import g

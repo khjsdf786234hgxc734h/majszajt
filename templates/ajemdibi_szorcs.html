@@ -24,6 +24,40 @@
                         <option value="0000">0000 - 1959</option>
                     </select>
                 </div>
+
+                <div class="form-group mx-sm-3">
+                    <select class="form-control" name="movie_genre">
+                        <option value="Action">Action</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="Animation">Animation</option>
+                        <option value="Biography">Biography</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Crime">Crime</option>
+                        <option value="Documentary">Documentary</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Family">Family</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Film-Noir">Film-Noir</option>
+                        <option value="Game-Show">Game-Show</option>
+                        <option value="History">History</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Music">Music</option>
+                        <option value="Musical">Musical</option>
+                        <option value="Mystery">Mystery</option>
+                        <option value="News">News</option>
+                        <option value="Reality-TV">Reality-TV</option>
+                        <option value="Romance">Romance</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Short">Short</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Talk-Show">Talk-Show</option>
+                        <option value="Thriller">Thriller</option>
+                        <option value="War">War</option>
+                        <option value="Western">Western</option>
+                    </select>
+                </div>
+
+
                 <button type="submit" class="btn btn-outline-secondary">Search</button>
             </form>
 
@@ -42,7 +76,11 @@
                 <tbody>
                     {% for record in list_movies %}
                     <tr>
-                        <td>{{ record.title_primary }}</td>
+                        <td>
+                            <a href="https://www.imdb.com/title/{{ record.id }}/" target="_blank">
+                                {{ record.title_primary }}
+                            </a>
+                        </td>
                         <td>{{ record.year }}</td>
                         <td>{{ record.genre }}</td>
                         <td>{{ record.rating }}</td>
