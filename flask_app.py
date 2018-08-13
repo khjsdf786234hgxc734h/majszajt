@@ -1,7 +1,6 @@
 from flask                      import Flask, render_template, request
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy                 import Column, Integer, String, Numeric
-from sqlalchemy.orm             import exc
 from majszajt                   import db_session as session
 
 app = Flask(__name__)
@@ -26,13 +25,10 @@ class Movie(Base):
     country               = Column(String)
 
 
-
-
-
-
 @app.route('/')
 def hello_world():
-    return 'Hello from majszajt!'
+    return 'Hello from ...'
+
 
 @app.route('/ajemdibi_szorcs', methods = ['GET', 'POST'])
 def ajemdibi_szorcs():
@@ -51,13 +47,8 @@ def ajemdibi_szorcs():
                 filter(Movie.genre.ilike('%' + movie_genre + '%')).\
                 filter(Movie.year==movie_year)
             session.rollback()
-        #except exc.NoResultFound, exc.MultipleResultsFound:
-        except:# exc.SQLAlchemyError:
+        except:
             session.rollback()
-
-        #else:
-        #    session.rollback()
-
         finally:
             session.rollback()
 
