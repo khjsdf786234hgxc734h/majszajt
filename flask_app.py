@@ -45,7 +45,9 @@ def ajemdibi_szorcs():
             list_movies = session.query(Movie.id, Movie.title_primary, Movie.year, Movie.genre, Movie.rating, Movie.vote, Movie.country).\
                 filter(Movie.title_primary.ilike('%' + movie_title + '%')).\
                 filter(Movie.genre.ilike('%' + movie_genre + '%')).\
-                filter(Movie.year==movie_year)
+                filter(Movie.year==movie_year).\
+                filter(Movie.country.notilike('%india%')).\
+                order_by(Movie.rating.desc(), Movie.title_primary.asc())
             session.rollback()
         except:
             session.rollback()
