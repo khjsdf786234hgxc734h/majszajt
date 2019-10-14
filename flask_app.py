@@ -3,6 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy                 import Column, Integer, String, Numeric
 from sqlalchemy                 import or_, and_
 from majszajt                   import db_session as session
+from config                     import ip_allowed
 
 app = Flask(__name__)
 
@@ -32,9 +33,16 @@ def hello_world():
     #return request.environ['REMOTE_ADDR'] -- did not work
     return 'Your IP: ' + request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
-@app.route('/bukmark')
+@app.route('/bukmark', methods = ['GET', 'POST'])
 def bukmark():
-    return 'Your IP: ' + request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+    ip_current = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+    if ip_current not in ip_allowed:
+        return 'Your IP: ' + ip_current
+
+    if request.method == 'POST':
+        ip_current = ip_current # to be continued from here
+
+    return render_template('bukmark.html')
 
 
 @app.route('/ajemdibi_szorcs', methods = ['GET', 'POST'])

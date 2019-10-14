@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Bookmark</title>
+    </head>
+
+    <body>
+        <!-- <div class="container"> -->
+
+        <form action="{{ url_for('bukmark') }}" method="POST">
+
+                    <select name="bookmark_category">
+                        <option value="Any">Any</option>
+                        <option value="Technology">Technology</option>
+                        <option value="News">News</option>
+                    </select>
+
+                    <input name="bookmark_html" placeholder="New bookmark or search string">
+
+                    <button type="bookmark_new">New Bookmark</button>
+
+                    <button type="bookmark_search">Search</button>
+
+        </form>
+
+        <hr>
+
+        <!-- </div> -->
+    </body>
+</html>
